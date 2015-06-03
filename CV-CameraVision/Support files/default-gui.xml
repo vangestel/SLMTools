@@ -1,0 +1,462 @@
+<?xml version='1.0' standalone='yes' ?>
+<LVData xmlns="http://www.ni.com/LVData">
+<Version>13.0.1f2</Version>
+<Cluster>
+<Name>Parameters</Name>
+<NumElts>8</NumElts>
+<Cluster>
+<Name>Configuration params</Name>
+<NumElts>11</NumElts>
+<I32>
+<Name>Number of cameras</Name>
+<Val>1</Val>
+</I32>
+<EW>
+<Name>Camera 1 port</Name>
+<Choice>A</Choice>
+<Choice>B</Choice>
+<Val>0</Val>
+</EW>
+<U32>
+<Name>ROI width</Name>
+<Val>1248</Val>
+</U32>
+<U32>
+<Name>ROI height</Name>
+<Val>1082</Val>
+</U32>
+<Boolean>
+<Name>Reset ROI</Name>
+<Val>0</Val>
+</Boolean>
+<DBL>
+<Name>Width scale</Name>
+<Val>5.00000000000000E-2</Val>
+</DBL>
+<DBL>
+<Name>Height scale</Name>
+<Val>5.00000000000000E-2</Val>
+</DBL>
+<I32>
+<Name>Center Y cam. 1</Name>
+<Val>541</Val>
+</I32>
+<I32>
+<Name>Center X cam. 1</Name>
+<Val>624</Val>
+</I32>
+<I32>
+<Name>Center Y cam. 2</Name>
+<Val>541</Val>
+</I32>
+<I32>
+<Name>Center X cam. 2</Name>
+<Val>624</Val>
+</I32>
+</Cluster>
+<Cluster>
+<Name>Acquisition params</Name>
+<NumElts>17</NumElts>
+<EW>
+<Name>Acquisition mode</Name>
+<Choice>Continuous</Choice>
+<Choice>Continuous batch</Choice>
+<Choice>Single batch</Choice>
+<Choice>Single batch -delayed</Choice>
+<Val>1</Val>
+</EW>
+<I32>
+<Name>Batch size</Name>
+<Val>50</Val>
+</I32>
+<I32>
+<Name>Image buffer size</Name>
+<Val>10</Val>
+</I32>
+<EW>
+<Name>Trigger mode</Name>
+<Choice>Camera timed (not sync.)</Choice>
+<Choice>Framegrabber timed (sync.)</Choice>
+<Choice>Software timed (sync.)</Choice>
+<Choice>External timing (sync.)</Choice>
+<Choice>Manual (sync.)</Choice>
+<Choice>Gated - camera (not sync.)</Choice>
+<Choice>Gated - grabber (sync.)</Choice>
+<Choice>Gated - software (sync.)</Choice>
+<Choice>Gated - external (sync.)</Choice>
+<Val>1</Val>
+</EW>
+<SGL>
+<Name>Duration HH</Name>
+<Val>1.00000</Val>
+</SGL>
+<EW>
+<Name>Acquisition start</Name>
+<Choice>Immediate</Choice>
+<Choice>Post-phoned</Choice>
+<Val>0</Val>
+</EW>
+<SGL>
+<Name>Duration SS</Name>
+<Val>1.00000E-2</Val>
+</SGL>
+<SGL>
+<Name>Duration MM</Name>
+<Val>1.00000E-2</Val>
+</SGL>
+<Timestamp>
+<Name>Start time</Name>
+<Cluster>
+<Name></Name>
+<NumElts>4</NumElts>
+<I32>
+<Name></Name>
+<Val>0</Val>
+</I32>
+<I32>
+<Name></Name>
+<Val>0</Val>
+</I32>
+<I32>
+<Name></Name>
+<Val>0</Val>
+</I32>
+<I32>
+<Name></Name>
+<Val>0</Val>
+</I32>
+</Cluster>
+</Timestamp>
+<DBL>
+<Name>Max. frame rate</Name>
+<Val>5.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Exposure time cam. 1</Name>
+<Val>1.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Exposure time cam. 2</Name>
+<Val>1.00000000000000</Val>
+</DBL>
+<EW>
+<Name>Exposure mode</Name>
+<Choice>Linear</Choice>
+<Choice>LinLog</Choice>
+<Val>0</Val>
+</EW>
+<DBL>
+<Name>Value 1</Name>
+<Val>17.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Value 2</Name>
+<Val>14.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Time 1</Name>
+<Val>1000.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Time 2</Name>
+<Val>1000.00000000000000</Val>
+</DBL>
+</Cluster>
+<Cluster>
+<Name>Storage params</Name>
+<NumElts>7</NumElts>
+<String>
+<Name>Base file name</Name>
+<Val>Test</Val>
+</String>
+<Path>
+<Name>Storage directory</Name>
+<Val>C:\CameraVision\Results</Val>
+</Path>
+<Cluster>
+<Name>Save what?</Name>
+<NumElts>7</NumElts>
+<Boolean>
+<Name>Original</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>Corrected</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>Binary</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>Temperature</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>Characteristics</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>Mapping</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>TemperatureValues</Name>
+<Val>0</Val>
+</Boolean>
+</Cluster>
+<EW>
+<Name>Image file type</Name>
+<Choice>JPG</Choice>
+<Choice>BMP</Choice>
+<Choice>PNG</Choice>
+<Val>1</Val>
+</EW>
+<String>
+<Name>Comments</Name>
+<Val></Val>
+</String>
+<EW>
+<Name>Storage mode</Name>
+<Choice>1 file per layer</Choice>
+<Choice>1 file for all layers </Choice>
+<Val>1</Val>
+</EW>
+<U16>
+<Name>Start iteration/layer</Name>
+<Val>0</Val>
+</U16>
+</Cluster>
+<Cluster>
+<Name>Correction params</Name>
+<NumElts>12</NumElts>
+<Boolean>
+<Name>Background correction</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>Hot-pixel correction</Name>
+<Val>0</Val>
+</Boolean>
+<Path>
+<Name>Black image cam. 1</Name>
+<Val>C:\CameraVision\Black images\Black-CameraA-Full.bmp</Val>
+</Path>
+<Path>
+<Name>Black image cam. 2</Name>
+<Val>C:\CameraVision\Black images\Black-CameraB-Full.bmp</Val>
+</Path>
+<I32>
+<Name>Y-shift</Name>
+<Val>0</Val>
+</I32>
+<I32>
+<Name>X-shift</Name>
+<Val>1</Val>
+</I32>
+<EW>
+<Name>Correlation algorithm</Name>
+<Choice>Fixed shift</Choice>
+<Choice>Cross-correlation</Choice>
+<Choice>Cross-correlation (5steps)</Choice>
+<Choice>Melt-pool center</Choice>
+<Val>0</Val>
+</EW>
+<SGL>
+<Name>Noise treshold</Name>
+<Val>40.00000</Val>
+</SGL>
+<EW>
+<Name>Smoothing algorithm</Name>
+<Choice>Noise tresholding</Choice>
+<Choice>NT+Median filter</Choice>
+<Choice>NT+Gaussian filter</Choice>
+<Val>0</Val>
+</EW>
+<Boolean>
+<Name>2nd image correlation</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>Image smoothing</Name>
+<Val>0</Val>
+</Boolean>
+<EW>
+<Name>Background correction method</Name>
+<Choice>Hardware</Choice>
+<Choice>Software</Choice>
+<Val>0</Val>
+</EW>
+</Cluster>
+<Cluster>
+<Name>Analysis params</Name>
+<NumElts>3</NumElts>
+<SGL>
+<Name>Binarization treshold</Name>
+<Val>120.00000</Val>
+</SGL>
+<Boolean>
+<Name>Image characteristics</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>Melt-pool characteristics</Name>
+<Val>0</Val>
+</Boolean>
+</Cluster>
+<Cluster>
+<Name>Temperature params</Name>
+<NumElts>9</NumElts>
+<Boolean>
+<Name>Temperature field</Name>
+<Val>0</Val>
+</Boolean>
+<DBL>
+<Name>Ratio correction factor</Name>
+<Val>1.00000000000000</Val>
+</DBL>
+<Boolean>
+<Name>Temperature value</Name>
+<Val>0</Val>
+</Boolean>
+<DBL>
+<Name>Y-coord.</Name>
+<Val>40.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>X-coord.</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+<EW>
+<Name>Averaging center</Name>
+<Choice>Fixed coordinates (pixel)</Choice>
+<Choice>Fixed coordinates (mm)</Choice>
+<Choice>Melt-pool center</Choice>
+<Val>0</Val>
+</EW>
+<EW>
+<Name>Averaging shape</Name>
+<Choice>Point</Choice>
+<Choice>Circle</Choice>
+<Choice>Ellipse</Choice>
+<Val>0</Val>
+</EW>
+<DBL>
+<Name>Minor axis</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Major axis</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+</Cluster>
+<Cluster>
+<Name>Mapping params</Name>
+<NumElts>7</NumElts>
+<Boolean>
+<Name>Enable mapping</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>Automatic timing</Name>
+<Val>0</Val>
+</Boolean>
+<Path>
+<Name>Scan pattern file</Name>
+<Val>C:\CameraVision\Scan patterns\Template.sp</Val>
+</Path>
+<DBL>
+<Name>Start off-set</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+<EW>
+<Name>Default map characteristic</Name>
+<Choice>Average intensity [0-255]</Choice>
+<Choice>Peak intensity [0-255]</Choice>
+<Choice>Melt-pool size [mm&#178;]</Choice>
+<Choice>Melt-pool aspect ratio []</Choice>
+<Choice>Melt-pool fragments []</Choice>
+<Choice>Average temperature [&#176;C]</Choice>
+<Choice>Max. temperature [&#176;C]</Choice>
+<Choice>Min. temperature [&#176;C]</Choice>
+<Choice>Std. dev. temperature [&#176;C]</Choice>
+<Val>0</Val>
+</EW>
+<I32>
+<Name>Default mark speed</Name>
+<Val>1000</Val>
+</I32>
+<I32>
+<Name>Jump speed</Name>
+<Val>1000</Val>
+</I32>
+</Cluster>
+<Cluster>
+<Name>Filter params</Name>
+<NumElts>2</NumElts>
+<Array>
+<Name>Filter array</Name>
+<Dimsize>0</Dimsize>
+<Cluster>
+<Name>Alert</Name>
+<NumElts>7</NumElts>
+<EW>
+<Name>Characteristic</Name>
+<Choice>Average intensity [0-255]</Choice>
+<Choice>Peak intensity [0-255]</Choice>
+<Choice>Melt-pool size [mm&#178;]</Choice>
+<Choice>Melt-pool aspect ratio []</Choice>
+<Choice>Melt-pool fragments []</Choice>
+<Choice>Melt-pool position X [pixel]</Choice>
+<Choice>Melt-pool position Y [pixel]</Choice>
+<Choice>Average temperature [&#176;C]</Choice>
+<Choice>Max. temperature [&#176;C]</Choice>
+<Choice>Min. temperature [&#176;C]</Choice>
+<Choice>Std. dev. temperature [&#176;C]</Choice>
+<Val></Val>
+</EW>
+<Boolean>
+<Name>Monitor</Name>
+<Val></Val>
+</Boolean>
+<DBL>
+<Name>Min.</Name>
+<Val></Val>
+</DBL>
+<DBL>
+<Name>Max.</Name>
+<Val></Val>
+</DBL>
+<DBL>
+<Name>Min. Thres.</Name>
+<Val></Val>
+</DBL>
+<U16>
+<Name>Min. Dur.</Name>
+<Val></Val>
+</U16>
+<Boolean>
+<Name>Report</Name>
+<Val></Val>
+</Boolean>
+</Cluster>
+</Array>
+<Cluster>
+<Name>Storage filters</Name>
+<NumElts>3</NumElts>
+<Boolean>
+<Name>Filter images</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>Filter characteristics</Name>
+<Val>0</Val>
+</Boolean>
+<Boolean>
+<Name>Filter temperature</Name>
+<Val>0</Val>
+</Boolean>
+</Cluster>
+</Cluster>
+</Cluster>
+</LVData>

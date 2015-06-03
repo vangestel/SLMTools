@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance">
+  <xsd:element name="Data">
+    <xsd:complexType>
+      <xsd:sequence minOccurs="0" maxOccurs="1">
+        <xsd:element name="XPosAck" type="xsd:string"/>
+        <xsd:element name="YPosAck" type="xsd:string"/>
+        <xsd:element name="XPos" type="xsd:string"/>
+        <xsd:element name="YPos" type="xsd:string"/>
+        <xsd:element name="XActPos" type="xsd:string"/>
+        <xsd:element name="YActPos" type="xsd:string"/>
+        <xsd:element name="XTemp" type="xsd:string"/>
+        <xsd:element name="YTemp" type="xsd:string"/>
+        <xsd:element name="ContrlTemp" type="xsd:string"/>
+        <xsd:element name="XStatus" type="xsd:string"/>
+        <xsd:element name="YStatus" type="xsd:string"/>
+        <xsd:element name="XPower" type="xsd:string"/>
+        <xsd:element name="YPower" type="xsd:string"/>
+        <xsd:element name="Interlock" type="xsd:string"/>
+        <xsd:element name="CurrentDIO" type="xsd:string"/>
+        <xsd:element name="JobMarker" type="xsd:string"/>
+        <xsd:element name="JobDataCntr" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

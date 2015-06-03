@@ -1,0 +1,1640 @@
+<HTML>
+<HEAD>
+<TITLE>CameraVision.vi</TITLE>
+<META NAME="Author" CONTENT="">
+<META NAME="GENERATOR" CONTENT="G Development Environment">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<A NAME="CameraVision.vi"></A><H2>CameraVision.vi</H2>
+<P>This vi is the main component of the CameraVision software.</P>
+<P></P>
+<P>The software is made for the acquisition, processing and storage of images. Specifically using one or two CMOS cameras and a SiliconSoftware framegrabber. The cameras can be any type compatible with the framegrabber, though the software is only tested with PhotonFocus CMOS-cameras of the MV-D1312-240-CL model. In this case a separate software called 'PFRemote', provided by PhotonFocus, is necessary for changing camera parameters.</P>
+<P></P>
+<P>The main program controls are on the left side of the window. User-configurable settings are grouped per category on the lower left panel. All outputs are displayed at the right side of the window. Different display configurations can be chosen using the tabs.</P>
+<P><IMG SRC="CameraVisionp.png" ALT="CameraVision.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Start acquisition</B> <P>Pressing this button initializes the cameras and starts acquiring and processing images.</P>
+<P></P>
+<P>Depending on the chosen 'Acquisition Mode', the acquisition starts immediately or a the time specified in the 'Start Time' field on the 'Timing' tab.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Pause acquisition</B> <P>Pause or unpause (restart) the acquisition and processing of images.</P>
+<P></P>
+<P>Restarting after a pause does not re-initialize the cameras. No changes can be made to the program settings during a pause.</P>
+<P></P>
+<P>Attention: During a pause, no new images are buffered and thus information is lost.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Stop acquisition</B> <P>Pressing this button stops the acquisition and processing of images and releases the camera resources.</P>
+<P></P>
+<P>If the button is pressed while a custom Start timer is active, the timer is de-activated and the camera resources are released.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Settings type</B> <P>The source of the program settings. No action is taken untill the 'Load settings' button is pressed.</P>
+<P></P>
+<P>Values:</P>
+<P></P>
+<P>Custom - The default setting. Values can be freely changed by the user.</P>
+<P></P>
+<P>Default - The settings are reset to the programmed default values.</P>
+<P></P>
+<P>Last used - The settings are reset to the values used during the last acquisition. Even when the software has since been restarted.</P>
+<P></P>
+<P>Saved - The settings are reset to the values of a previously saved configuration file. The configuration file has to be selected by the user through a dialog box, presented when the 'Load settings' button is pressed.</P>
+<P></P>
+<P>The default value is Custom.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Load settings</B> <P>Pressing this button loads or resets the settings parameters, according to the value selected in the 'Settings source' field.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Save settings</B> <P>Save the current settings parameters in a separate settings file. The file format is .ini.</P>
+<P></P>
+<P>Note: When starting an acquisition, the current settings are already automatically saved in a settings file in the 'Storage directory' with the 'Base file name' as name.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Import images</B> <P>This function allows the re-processing of previously acquired images. Saved images are selected using a pop-up browser window. The re-processing can be started, paused or stopped like a normal acquisition. To exit the re-processing mode, click 'Unload'.</P>
+<P></P>
+<P>Warning: The re-processed images do not inherit the time-stamp from the original images.</P>
+<P></P>
+<P>Note: Re-loading images from memory can be time-consuming. Consider using a low sample rate.</P>
+<P></P>
+<P>Note2: Two cameras can be simulated using the default naming pattern for two cameras and selecting '2' in the 'Number of cameras' field in the configuration settings.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Display camera</B> <P>Select which camera image/information to display.</P>
+<P></P>
+<P>This option is only active when 2 cameras are used.</P>
+<P>The default value is Camera 1.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Display image</B> <P>Select which image type to display.</P>
+<P></P>
+<P>Values:</P>
+<P></P>
+<P>Original - The originally captured image without any changes or processing.</P>
+<P></P>
+<P>Corrected - The image after background, hot-pixel correction, symmetry correction, spatial correction and/or smoothing.</P>
+<P></P>
+<P>Binary - The image after binarization (black-white) using the specified 'Binarization treshold'.</P>
+<P></P>
+<P>The default value is the Original image.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>Browse batch</B> <P>Browse through all the images stored in the current image batch.</P>
+<P></P>
+<P>This option is only available when the 'Single batch' or 'Continuous batch' modes are selected on the 'Acquisition' tab.</P>
+<P></P>
+<P>The image at position 0 is always the last acquired image.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>Configuration params.</B> <P>Settings that determine the configuration of the camera hardware.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>Camera config file</B> <P>The path to the configuration file for the Photonfocus cameras.</P>
+<P></P>
+<P>Only mcf-type files are accepted.</P>
+<P></P>
+<P>It is recommended to refer to the configuration file included with this software or a copy thereof. The file is located in the 'Support files' folder.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>Number of cameras</B> <P>The number of cameras to use. The cameras have to be connected to the aqcuisition card (framegrabber) at port 0.</P>
+<P></P>
+<P>The default value is 1.</P>
+<P></P>
+<P>Accepted values are 1 and 2.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Camera 1 port</B> <P>The letter of the port on the data-acquisition card to which the first camera (Camera 1) is connected.</P>
+<P></P>
+<P>The default value is A.</P>
+<P></P>
+<P>Accepted values are A and B.</P>
+<P></P>
+<P>When two cameras are used, the second letter is assigned automatically.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cu32.png" ALT="cu32"></P>
+</TD>
+<TD>
+<B>ROI width [pixels]</B> <P>The number of pixels to read in the x-direction.</P>
+<P></P>
+<P>This defines the width of the image that is processed and stored.</P>
+<P></P>
+<P>Attention: The value has to be the same as the one specified in the 'PFRemote' software on the 'Window' tab (parameter W). Except for values below 480, the 'PFRemote' value should remain 480.</P>
+<P></P>
+<P>The default value is 1248 pixels.</P>
+<P></P>
+<P>Accepted values are 96-1248, in steps of 96 pixels.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cu32.png" ALT="cu32"></P>
+</TD>
+<TD>
+<B>ROI height [pixels]</B> <P>The number of pixels to read in the y-direction.</P>
+<P></P>
+<P>This defines the height of the image that is processed and stored.</P>
+<P></P>
+<P>Attention: the value has to be the same as the one specified in the 'PFRemote' software on the 'Window' tab (parameter H).</P>
+<P></P>
+<P>The default value is 1082 pixels.</P>
+<P></P>
+<P>Accepted values are 1-1082, in steps of 1 pixel.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Reset ROI</B> <P>Reset the ROI width and ROI height to their respective maximum values.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>Width scale [mm/pixel]</B> <P>The scaling used for, by example, the calculation of the real-life size of the melt pool.</P>
+<P></P>
+<P>A calibration image is needed for the determination of the scale. If the calibration is not known, a value of '1' is recommended. In this case, the size would equal the number of pixels.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>Height scale [mm/pixel]</B> <P>The scaling used for, by example, the calculation of the real-life size of the melt pool.</P>
+<P></P>
+<P>A calibration image is needed for the determination of the scale. If the calibration is not known, a value of '1' is recommended. In this case, the size would equal the number of pixels.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>Center Y cam. 1</B> <P>The pixel position of the center of the Region Of Interest (ROI) field of camera 1.</P>
+<P></P>
+<P>This is the y-coordinate of the pixel that represents the center of region to be imaged.</P>
+<P>The y-coordinate is relative to the top-left corner of the full (1248x1082 pixels) image.</P>
+<P></P>
+<P>The default is 541 (center of the image sensor).</P>
+<P>The center is automatically shifted if the ROI overlaps with the image sensor borders.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>Cam. 1 center (X,Y)</B> <P>The pixel position of the center of the Region Of Interest (ROI) field of camera 1.</P>
+<P></P>
+<P>This is the x-coordinate of the pixel that represents the center of region to be imaged.</P>
+<P>The x-coordinate is relative to the top-left corner of the full (1248x1082 pixels) image.</P>
+<P></P>
+<P>The default is 624 (center of the image sensor).</P>
+<P>The center is automatically shifted if the ROI overlaps with the image sensor borders.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>Center Y cam. 2</B> <P>The pixel position of the center of the Region Of Interest (ROI) field of camera 2.</P>
+<P></P>
+<P>This is the y-coordinate of the pixel that represents the center of region to be imaged.</P>
+<P>The y-coordinate is relative to the top-left corner of the full (1248x1082 pixels) image.</P>
+<P></P>
+<P>The default is 541 (center of the image sensor).</P>
+<P>The center is automatically shifted if the ROI overlaps with the image sensor borders.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>Cam. 2 center (X,Y)</B> <P>The pixel position of the center of the Region Of Interest (ROI) field of camera 2.</P>
+<P></P>
+<P>This is the x-coordinate of the pixel that represents the center of region to be imaged.</P>
+<P>The x-coordinate is relative to the top-left corner of the full (1248x1082 pixels) image.</P>
+<P></P>
+<P>The default is 624 (center of the image sensor).</P>
+<P>The center is automatically shifted if the ROI overlaps with the image sensor borders.</P>
+</TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>Timing params.</B> <P>Settings that determine the timing and time constraints of the image acquisition.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Acquisition start</B> <P>Immediately start or post-phone the acquisition.</P>
+<P></P>
+<P>When 'Immediate' is selected, the acquisition will start immediately after the 'Start' button is pressed and the cameras are initialized.</P>
+<P></P>
+<P>When 'Post-phone' is selected, pressing the 'Start' button will initialize the cameras, but acquisition will be delayed untill the time specified in the 'Start time' field.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="csgl.png" ALT="csgl"></P>
+</TD>
+<TD>
+<B>Duration MM</B> <P>The maximum duration of the image acquisition.</P>
+<P></P>
+<P>The time is counted from the actual start of the acquisition (the 'Start time' value in case of a post-phoned start).</P>
+<P></P>
+<P>When the time has passed, any acquisition still busy will be stopped as if the 'Stop' button was pressed.</P>
+<P></P>
+<P>The default value is 1 hour.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="csgl.png" ALT="csgl"></P>
+</TD>
+<TD>
+<B>Max. duration [HH:MM:SS]</B> <P>The maximum duration of the image acquisition.</P>
+<P></P>
+<P>The time is counted from the actual start of the acquisition (the 'Start time' value in case of a post-phoned start).</P>
+<P></P>
+<P>When the time has passed, any acquisition still busy will be stopped as if the 'Stop' button was pressed.</P>
+<P></P>
+<P>The default value is 1 hour.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="csgl.png" ALT="csgl"></P>
+</TD>
+<TD>
+<B>Duration SS</B> <P>The maximum duration of the image acquisition.</P>
+<P></P>
+<P>The time is counted from the actual start of the acquisition (the 'Start time' value in case of a post-phoned start).</P>
+<P></P>
+<P>When the time has passed, any acquisition still busy will be stopped as if the 'Stop' button was pressed.</P>
+<P></P>
+<P>The default value is 1 hour.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="catrn.png" ALT="catrn"></P>
+</TD>
+<TD>
+<B>Start time</B> <P>The time at which to start the acquisition of images.</P>
+<P></P>
+<P>This field is only used when the 'Acquisition start' field is set to 'Post-phone'.</P>
+<P></P>
+<P>If the start time is before the time at which the 'Start' button is pressed, the acquisition will start immediately.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>Max. frame rate [frames/s]</B> <P>The maximum allowed image acquisition rate.</P>
+<P></P>
+<P>If the camera captures images at a faster rate, this setting will force the acquisition to the specified value.</P>
+<P></P>
+<P>The default value is 5 images/second.</P>
+<P></P>
+<P>Accepted values are 0.0001-20 000 images/second.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>Exposure time cam. 1 [ms]</B> <P>Set the exposure time for Camera 1. A longer exposure time allows light to stimulate the sensor for a longer time, resulting in a brighter image. A longer exposure can cause saturation and motion blurring.</P>
+<P></P>
+<P>The default value is 1 milisecond.</P>
+<P></P>
+<P>Accepted values are everything larger than 0.01 miliseconds.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>Exposure time cam. 2 [ms]</B> <P>Set the exposure time for Camera 1. A longer exposure time allows light to stimulate the sensor for a longer time, resulting in a brighter image. A longer exposure can cause saturation and motion blurring.</P>
+<P></P>
+<P>The default value is 1 milisecond.</P>
+<P></P>
+<P>Accepted values are everything larger than 0.01 miliseconds.</P>
+</TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Image refresh</B> <P>Refresh the display after changing a selector value or toggle the continuous update of the display during an acquisition.</P>
+<P></P>
+<P>During an acquisition, this button enables or disables the continuous update of the displays.</P>
+<P>Disabling the updating can speed up the program, while images are still acquired, processed and stored (in constrast to the 'Pause' button).</P>
+<P></P>
+<P>Outside an acquisition this button refreshes the current display, for example after one of the selector values is changed (Camera selector, Type selector).</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Parameters</B> <P>The parameters tabs contain all the user adjustable settings of the program.</P>
+<P></P>
+<P>During runtime, the program status can be checked on the 'Runtime info' tab.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>Storage params.</B> <P>Settings that determine where and which images and data are stored.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>Base file name</B> <P>The first part of the name given to all files that are stored during this image acquisition. It serves as an identification for this particular acquisition.</P>
+<P></P>
+<P>If a file with the same base name is found, a warning message is presented before a new acquisition is started.</P>
+<P></P>
+<P>The default value is 'Test'.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>Storage directory</B> <P>The default directory for all files that are stored during this image acquisition.</P>
+<P></P>
+<P>The default value is the 'C:\CameraVision\Results'.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>Save what?</B> <P>Select which images or data to store.</P>
+<P></P>
+<P></P>
+<P></P>
+<P>The 'Background correction' or 'Hot-pixel correction' setting on the 'Processing' tab have to be checked in order to be able to store the 'Corrected' image.</P>
+<P></P>
+<P>The 'Image characteristics' or 'Melt-pool characteristics' setting on the 'Processing' tab have to be checked in order to be able to store the 'Characteristics' data.</P>
+<P></P>
+<P>The 'Temperaturefield' setting on the 'Processing' tab has to be checked in order to be able to store the 'Temperature field' data.</P>
+<P></P>
+<P>The default is all unchecked.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Original image</B> <P>The original image.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Corrected image</B> <P>The image after all the correction steps.</P>
+<P></P>
+<P>In order to save a Corrected image at least one of the options of the 'Correction' settings on the 'Processing' tab has to be enabled.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Binary image</B> <P>A binarized (black/white) version of the image, used for example for melt pool detection.</P>
+<P></P>
+<P>In order to save a Binary image either the 'Melt-pool characteristics' or 'Melt-pool spatial characteristics' settings have to be enabled in the 'Analysis' section of the 'Processing' tab.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Temperature field (.tsv)</B> <P>A 2D numeric array of the tempearuture [°C] at each pixel.</P>
+<P></P>
+<P>In order to save the temperature field, the number of cameras has to be equal to 2 and 'Temperature field' and '2nd image correlation' have to be enabled on the 'Processing' tab.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Characteristics (.tdms)</B> <P>Information on the general image and/or the melt pool, along with the image timestamps.</P>
+<P></P>
+<P>The 'Image characteristics' or 'Melt-pool characteristics' setting on the 'Processing' tab have to be checked in order to be able to store the 'Characteristics' data.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Signal map (.tsv)</B> <P>A 2D colored map, correlating the position of the laser beam with the value of one of the melt pool characteristics.</P>
+<P></P>
+<P>In order to save a characteristics map, 'Enable mapping' and either 'Image characteristics' or 'Melt-pool characteristics' have to be enabled on the 'Processing' tab.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Temperature values (.tdms)</B> <P>Statistical data related to the calculated temperature field.</P>
+<P></P>
+<P>In order to save the temperature value statistics, the number of cameras has to be equal to 2 and 'Temperature field', 'Temperature value' and '2nd image correlation' have to be enabled on the 'Processing' tab.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Characteristics - spatial (.tdms)</B> <P>Information about the position and orientation of the melt pool.</P>
+<P></P>
+<P>In order to save the spatial Melt-pool characteristics the corresponding setting has to be enabled in the 'Analysis' section of the 'Processing' tab.</P>
+</TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Image file type</B> <P>The image file type in which to save the images.</P>
+<P></P>
+<P>Values are JPG, BMP and PNG.</P>
+<P></P>
+<P>The default value is BMP.</P>
+<P></P>
+<P>BMP storess the files with lossless compression, preserving all the information. JPG and PNG store the files with lossy compression, meaning some information is lost.</P>
+<P></P>
+<P>Internally, all images are stored uncompressed during the processing.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>Comments</B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cnclst.png" ALT="cnclst"></P>
+</TD>
+<TD>
+<B>Acquisition params.</B> <P>Settings that determine the way in which images are acquired.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Acquisition mode</B> <P>The aqcuisition mode determines the way in which images are buffered in the processing module during acquisition.</P>
+<P></P>
+<P>Values:</P>
+<P>Continuous - In continuous mode a single image is stored in the proces module. This is the fastest mode with the lowest memory consumption. In this mode the time selector is disables, as no older images are retained in the processing module. Acquisition continuous untill the 'Stop' button is pressed or the 'Max. duration' time has elapsed.</P>
+<P>Single batch - A number of images determined by the 'Batch size' parameter is acquired. Acquisition is stopped automatically. The process module buffer in which the images are stored is independent from the buffer set in the 'Configuration' tab. All images in the batch can be viewed during and after acquisition using the 'Time selector' slider among the main controls.</P>
+<P>Continuous batch - Works the same as the 'Single batch' mode, however, acquisition is not stopped after the first batch. The x last images, with x the number in 'Batch size' can be viewed during and after acquisition using the 'Time selector' slider among the main controls.</P>
+<P></P>
+<P>The default value is 'Continuous'.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>Batch size</B> <P>The number of images buffered in the process module.</P>
+<P></P>
+<P>Images that are buffered can be viewed during and after the acquisition using the 'Time selector' slider among the main controls.</P>
+<P></P>
+<P>No images are buffered in the processing module when the 'Acquisition mode' is set to 'Continuous'.</P>
+<P></P>
+<P>The default value is 100 images.</P>
+<P></P>
+<P>Recommended values are 10-100.</P>
+<P></P>
+<P>Note: The larger the batch size, the more memory is used. Using image buffering also lowers the program performance.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>Image buffer size</B> <P>The number of images that can be temporarily stored in case of a computer or software slowdown.</P>
+<P></P>
+<P>The current state of the buffer is displayed on the 'Runtime info' tab.</P>
+<P></P>
+<P>If the buffer gets full during acquisition, try increasing the 'Image buffer size' or reducing the maximum sample rate on the 'Acquisition' tab.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Trigger mode</B> <P>The trigger mode determines how the camera is signalled to  acquire an image.</P>
+<P></P>
+<P>Values:</P>
+<P>Free running -  In this mode the camera tries to approximate the chosen maximum sample rate. When two cameras are in use, they act independently.</P>
+<P>Hardware timed - In this mode the image acquisition harware card (framegrabber) sents trigger pulses to the camera at the chosen (max.) sample rate. When two cameras are in use they are synchronized, with the start of  the exposure for each camera as the synchronization point.</P>
+<P>Software triggered - In this mode the cameras acquire in image when a special software command is received. This command can come from an external module (for synchronization with a laser beam, for example). When two cameras are in use they are synchronized together.</P>
+<P></P>
+<P>The default mode is hardware timed.</P>
+</TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Displays</B> <P>The displays tabs group all the program outputs.</P>
+<P></P>
+<P>Only the outputs on the visible tab are updated, except for the 'Historic information' tab, which is continuously updated.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Processing</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>Correction params.</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Background correction</B> <P>This setting enables the background noise compensation during the processing of the image. The result is stored in the 'Corrected' image type.</P>
+<P></P>
+<P>A reference to a black image has to be provided for each camera using he fields 'Black image camera 1' and 'Black image camera 2'. These black images can be acquired by closing the diaphragm of the cameras.</P>
+<P></P>
+<P>This setting has to be checked in order to be able to store the 'Corrected' image.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Hot-pixel correction</B> <P>Currently disabled functionality.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>Black image cam. 1</B> <P>Reference to a previously captured black image for Camera 1.</P>
+<P></P>
+<P>This reference is necessary when 'Background correction' or 'Hot-pixel correction' are checked. A black image can be acquired by closing the diaphragm of the camera.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>Black image cam. 2</B> <P>Reference to a previously captured black image for Camera 2.</P>
+<P></P>
+<P>This reference is necessary when 'Background correction' or 'Hot-pixel correction' are checked. A black image can be acquired by closing the diaphragm of the camera.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>Y-shift</B> <P>The shift of the 2nd camera image along the y-axis, in pixels.</P>
+<P></P>
+<P>The positive y-axis is towards the bottom of the image.</P>
+<P></P>
+<P>This setting has no effect unless 'Fixed shift' is selected as the correlation algorithm.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>X-shift</B> <P>The shift of the 2nd camera image along the x-axis, in pixels.</P>
+<P></P>
+<P>The positive x-axis is towards the right of the image.</P>
+<P></P>
+<P>This setting has no effect unless 'Fixed shift' is selected as the correlation algorithm.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Correlation algorithm</B> <P>The correlation algorithm used for the superposition of images from two separate cameras.</P>
+<P></P>
+<P>Values:</P>
+<P>Fixed shift - The second image is shifted by a user-specified amount (X-shift, Y-shift). The positive x-axis is to the right, the positive y-axis is to the bottom.</P>
+<P>Cross-correlation - The shift is determined by calculating the position of the maximum of the normalized cross-correlation of the two images. The cross-correlation is performed in the frequency-domain.</P>
+<P>Cross-correlation (5-steps) - The same algorithm as the normal Cross-correlation, but the shift is only recalculated for every 5th image, therefore reducing the overall calculation time.</P>
+<P>Melt-pool center - The shift is determined by calculating the difference in the position of the center of the melt pool of each image. The melt-pool center is defined as the center of gravity of the melt-pool (not of the complete image). The 'Spatial characteristics' setting has to be enabled for this algorithm.</P>
+<P></P>
+<P>The default algorithm is 'Cross-correlation'.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="csgl.png" ALT="csgl"></P>
+</TD>
+<TD>
+<B>Noise treshold</B> <P>When image smoothing is enabled, all pixels with an intensity below the noise threshold are changed to black pixels.</P>
+<P></P>
+<P>The default value is 25.</P>
+<P>Accepted values are 0-255.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Smoothing algorithm</B> <P>The algorithm used for the reduction of image noice.</P>
+<P></P>
+<P>Values:</P>
+<P>Noise thresholding - This turns all the pixels with an intensity below the specified 'Noise threshold' into black pixels. This filter helps removing background and reduces border artefacts when calculating the temperature field.</P>
+<P>Median filter - This filter replaces each pixel by the median intensity value of the 9 nearest pixels. The filter reduces sensor noise and flattens spikes in the temperature filed.</P>
+<P>Gaussian filter - This filter replaces each pixel by a weighed average (Gaussian weights) of the 9 nearest pixels. The filter has the same effect as the 'Median filter', but is better at preserving the edges of objects in the image.</P>
+<P></P>
+<P>Attention: The 'Median filter' and 'Gaussian filter' algorithm also apply the 'Noise thresholding' algorithm. Set the 'Noise threshold' to 255 to avoid this.</P>
+<P></P>
+<P>The defautl algorithm is 'Noise thresholding'.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>2nd image correlation</B> <P>Image correlation allows the superposition of two separate images, where there is a small shift in the position of the object on the image.</P>
+<P></P>
+<P>Correlation of the 2nd camera image on the 1st camera image is necessary for the calculation of the temperature field.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Image smoothing</B> <P>Image smoothing reduces the influence of spatial image noise, which can improve the calculation of the temperature field.</P>
+<P></P>
+<P>The image smoothing is performed after the melt-pool characteristics calculation, and has thus no effect on its values.</P>
+</TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>Characteristic params.</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="csgl.png" ALT="csgl"></P>
+</TD>
+<TD>
+<B>Binarization treshold</B> <P>The minimum pixel intensity level at which a pixel is considered molten.</P>
+<P></P>
+<P>This setting impacts the calculation of the melt-pool characteristics.</P>
+<P></P>
+<P>The default value is 120.</P>
+<P>Accepted values are 0-255.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Image characteristics</B> <P>This setting enables the extraction of various image characteristics during the processing of the image. The results can optionally be stored in the 'Characteristics' data collection.</P>
+<P></P>
+<P>The extracted characteristics are the average intensity over the complete image and the highest (peak) intensity found.</P>
+<P></P>
+<P>Both properties are expressed in 8-bit grey-level values (0-255). The processing is based on the 'Corrected' image, or the original image when no corrections are enabled.</P>
+<P></P>
+<P>This setting or the 'Melt-pool characteristics' setting have to be checked in order to be able to store the 'Characteristics' data.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Melt-pool characteristics</B> <P>This setting enables the extraction of various characteristics of the melt-pool during the processing of the image. The results can optionally be stored in the 'Characteristics' data collection.</P>
+<P></P>
+<P>The extracted characteristics are the size of the main melt-pool (in mm²), the ratio of the two principal axes of an ellipse fitted over the melt pool and the total number of melt pools found (detection of melt-pool breakdown or balling).</P>
+<P></P>
+<P>This setting or the 'Image characteristics' setting have to be checked in order to be able to store the 'Characteristics' data.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Melt-pool spatial charact.</B> <P>This setting enables the extraction of information regarding the position and orientation of the melt pool.</P>
+<P></P>
+<P>The extracted properties are the position of the center of gravity of the melt pool in pixels and the orientation of the melt pool. The orientation is determined by calculating the principal axis. The orientation is expressed in degrees, starting from the positive x-axis and rotating counter-clockwise.</P>
+<P></P>
+<P>This settings has to be checked to be able to save the spatial melt-pool characteristics.</P>
+</TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>Temperature params.</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Temperature field</B> <P>This setting enables the calculation of the temperature for each pixel in the image.</P>
+<P></P>
+<P>The temperature calculation uses the 2-color pyrometer ratio method. Therefore 2 cameras have to be used and 2nd image correlation has to be enabled.</P>
+<P>The correspondence between the ratio of the intensity of the two cameras and the temperature is interpolated from the points in an external file ('temperatureFieldRegression.dat' in 'Program data'). The correspondence is the result of a previous calibration.</P>
+<P>The temperature calculation automically corrects for varying exposure times between the two cameras. An extra correction factor for the intensity ratio (due to filters,...) is available.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>Ratio correction factor</B> <P>The correction factor to be applied to the intensity ratio, before the temperature calculation.</P>
+<P></P>
+<P>The default value is 1 (no correction).</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Temperature value</B> <P>This setting enables the calculation of the temperature at a chosen position or region.</P>
+<P></P>
+<P>Next to the average temperature, also the minimum and maximum temperature, the standard deviation and the number of pixels taken into account is calculated.</P>
+<P></P>
+<P>In order to calculate a temperature value, 2 cameras have to be used and the 'Temperature field' and '2nd image correlation' settings have to be enabled.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>Y-coord.</B> <P>The y-coordinate of the position of the center of the temperature value.</P>
+<P></P>
+<P>The y-axis is towards the bottom of the image.</P>
+<P>The unit and axis origin depend on the selection for the 'Averaging center'. If 'Melt-pool center' is selected, this setting is neglected.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>X-coord.</B> <P>The x-coordinate of the position of the center of the temperature value.</P>
+<P></P>
+<P>The x-axis is towards the right of the image.</P>
+<P>The unit and axis origin depend on the selection for the 'Averaging center'. If 'Melt-pool center' is selected, this setting is neglected.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Averaging center</B> <P>Determine the center position for the temperature value calculation.</P>
+<P></P>
+<P>Values:</P>
+<P>Fixed coordinates - The center of the temperature value is a fixed point in the image. The coordinates of the point can be given in pixel position (relative to top-left) or in mm (relative to center of image).</P>
+<P>Melt-pool center - The center of the temperature value is re-calculated for each image as the center of gravity of the melt-pool of the 1st camera image. The 'Spatial characteristics' setting has to be enabled for this functionality.</P>
+<P></P>
+<P>The default option is 'Fixed coordinates (mm)'.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Averaging shape</B> <P>Choose the shape over which the temperature value is calculated.</P>
+<P></P>
+<P>Values:</P>
+<P>Point - The temperature of a single point at the chosen position is returned. </P>
+<P>Circle - The temperature is averaged over a circular area around the chosen center. The diameter of the circle, in pixels, can be set in 'Major axis'.</P>
+<P>Ellipse - The temperature is averaged over an elliptical area around the chosen center. The major and minor full axis can be set using the correspoding settings. The ellipse major axis is aligned automatically with the melt pool principal axis. For this functionality the 'Spatial characteristics' setting has to be enabled.</P>
+<P></P>
+<P>The defualt setting is 'Point'.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>Minor axis</B> <P>The ellipse full minor axis, in pixels.</P>
+<P></P>
+<P>If the averaging shape is 'Point' or 'Circle', this setting is neglected.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>Major axis</B> <P>The circle diameter of ellipse full major axis, in pixels.</P>
+<P></P>
+<P>If the averaging shape is 'Point', this setting is neglected.</P>
+</TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cu16.png" ALT="cu16"></P>
+</TD>
+<TD>
+<B>Processing selector</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>Mapping params.</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Enable mapping</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Automatic timing</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>Scan pattern file</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>Start off-set [s]</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Default map characteristic</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>Default mark speed [mm/s]</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>Default jump speed [mm/s]</B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cnotern.png" ALT="cnotern"></P>
+</TD>
+<TD>
+<B>Com-out</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cnotern.png" ALT="cnotern"></P>
+</TD>
+<TD>
+<B>Com-in</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>Map characteristic</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>Vertical Info Button</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>Program status</B> <P>The current state of the running program.</P>
+<P></P>
+<P>The most important states are:</P>
+<P>The default state when the program is inactive is 'Idle'.</P>
+<P>During initialization of the cameras the status is 'Initialize cameras'.</P>
+<P>When a custom timing trigger is active, the status is 'Wait'.</P>
+<P>During acquisition the status is 'Acquire'.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>Camera initialization</B> <P>The initialization state of the camera and framegrabber.</P>
+<P></P>
+<P>If initialization is succesfull, the led lights up bright green.</P>
+<P></P>
+<P>After an acquisition the led should go dark, meaning the camera resources have been released again.</P>
+<P></P>
+<P>If there is a problem with the initialization or release of the cameras, the computer might have to be restarted. </P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="i1du32.png" ALT="i1du32"></P>
+</TD>
+<TD>
+<B>Camports</B> <P>The configuration of the cameras.</P>
+<P></P>
+<P>This indicator allows to check the configuration of the cameras. Port A on the framegrabber card corresponds to camport 0, Port B corresponds to camport 1.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>Numeric</B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="i2du32.png" ALT="i2du32"></P>
+</TD>
+<TD>
+<B>Image sizes [pixels]</B> <P>The size (width, height), in pixels of the acquired images.</P>
+<P></P>
+<P>This indicator can detect problems with the Region of Interest (ROI) settings in camera configuration file or the 'PFRemote' software.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>Numeric</B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>Current image #</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Frametime [s/frame]</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Image buffer</B> <P>The status of the acquisition image buffer.</P>
+<P></P>
+<P>The buffer should be empty during acquisition.</P>
+<P>Temporary slowdowns of the software can cause the buffer to fill a little bit.</P>
+<P></P>
+<P>When the buffer is full, data loss can occur. Try to decrease the 'Max. sample rate' on the 'Timing' tab or increase the 'Buffer size' on the 'Configuration' tab.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Free [GB]    /</B> <P>The free storage space left on the disk drive on which the default storage directory is located.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Total [GB]</B> <P>The total storage space on the disk drive on which the default storage directory is located.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="iudtagrefflat.png" ALT="iudtagrefflat"></P>
+</TD>
+<TD>
+<B>Information</B> <P>Displays the last acquired image, basic image information (size, number,color type) and information about the cursor (pixel position, pixel intensity).</P>
+<P></P>
+<P>The camera source can be selected using the 'Camera selector' control.</P>
+<P>The type of image can be selected using the 'Type selector' control.</P>
+<P>The display style can be modified using the tools panel to the right or the right-click context menu.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>Histogram</B> <P>Displays the number of pixels for each grey level of the last acquired image.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="iudtagrefflat.png" ALT="iudtagrefflat"></P>
+</TD>
+<TD>
+<B>Camera 1</B> <P>Displays the Camera 1 image selected using the 'Time selector' control.</P>
+<P>Any image of the last image batch can be displayed here.</P>
+<P></P>
+<P>The type of image can be selected using the 'Type selector' control.</P>
+<P>The display style can be modified using the tools panel to the right or the right-click context menu.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="iudtagrefflat.png" ALT="iudtagrefflat"></P>
+</TD>
+<TD>
+<B>Camera 2</B> <P>Displays the Camera 2 image selected using the 'Time selector' control.</P>
+<P>Any image of the last image batch can be displayed here.</P>
+<P></P>
+<P>The type of image can be selected using the 'Type selector' control.</P>
+<P>The display style can be modified using the tools panel to the right or the right-click context menu.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="i2ddbl.png" ALT="i2ddbl"></P>
+</TD>
+<TD>
+<B>Camera 1 - characteristics chart</B> <P>Displays a graph of the image and melt-pool characteristics of all the images acquired during the last acquisition.</P>
+<P></P>
+<P>The image characteristics are the average intensity over the complete image and the highest (peak) intensity found.</P>
+<P>Both properties are expressed in 8-bit grey-level values (0-255). The processing is based on the 'Corrected' image, or the original image when correction is unchecked.</P>
+<P></P>
+<P>The melt-pool characteristics are the size of the main melt-pool (in pixels), the ratio of the two principal axes of an ellips fitted over the melt pool and the total number of melt pools found (detection of melt-pool breakdown or balling).</P>
+<P></P>
+<P>The 'Image characteristics' setting or the 'Melt-pool characteristics' setting have to be checked in order to be able to display the graphs.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="i2ddbl.png" ALT="i2ddbl"></P>
+</TD>
+<TD>
+<B>Camera 2 - characteristics chart</B> <P>Displays a graph of the image and melt-pool characteristics of all the images acquired during the last acquisition.</P>
+<P></P>
+<P>The image characteristics are the average intensity over the complete image and the highest (peak) intensity found.</P>
+<P>Both properties are expressed in 8-bit grey-level values (0-255). The processing is based on the 'Corrected' image, or the original image when correction is unchecked.</P>
+<P></P>
+<P>The melt-pool characteristics are the size of the main melt-pool (in pixels), the ratio of the two principal axes of an ellips fitted over the melt pool and the total number of melt pools found (detection of melt-pool breakdown or balling).</P>
+<P></P>
+<P>The 'Image characteristics' setting or the 'Melt-pool characteristics' setting have to be checked in order to be able to display the graphs.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="inclst.png" ALT="inclst"></P>
+</TD>
+<TD>
+<B>Characteristics</B> <P>Displays extracted image and melt-pool characteristics of the last acquired image.</P>
+<P></P>
+<P>The image characteristics are the average intensity over the complete image and the highest (peak) intensity found.</P>
+<P>Both properties are expressed in 8-bit grey-level values (0-255). The processing is based on the 'Corrected' image, or the original image when correction is unchecked.</P>
+<P></P>
+<P>The melt-pool characteristics are the size of the main melt-pool (in pixels), the ratio of the two principal axes of an ellips fitted over the melt pool and the total number of melt pools found (detection of melt-pool breakdown or balling).</P>
+<P></P>
+<P>The 'Image characteristics' setting or the 'Melt-pool characteristics' setting have to be checked in order to be able to display the 'Characteristics' data.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Average intensity [0-255]</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Peak intensity [0-255]</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Melt-pool size [mm²]</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Melt-pool aspect ratio []</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Melt-pool fragments []</B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="i1d3D_Plot_Datatypelvclass.png" ALT="i1d3D_Plot_Datatypelvclass"></P>
+</TD>
+<TD>
+<B>Temperature [°C]</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="iudtagrefflat.png" ALT="iudtagrefflat"></P>
+</TD>
+<TD>
+<B>Browser</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="i1d3D_Plot_Datatypelvclass.png" ALT="i1d3D_Plot_Datatypelvclass"></P>
+</TD>
+<TD>
+<B>Mapping</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="inclst.png" ALT="inclst"></P>
+</TD>
+<TD>
+<B>Temperature characteristics</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Temperature value</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Max. temperature</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Min. temperature</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Stand. dev. temperature</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>Datapoints</B> </TD>
+</TR>
+</Table>
+</UL>
+</BODY>
+</HTML>

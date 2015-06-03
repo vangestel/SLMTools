@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<TITLE>EC1000-control.lvlib:SM1000-control.lvclass:clientAttachBroadcast.vi</TITLE>
+<META NAME="Author" CONTENT="">
+<META NAME="GENERATOR" CONTENT="G Development Environment">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:clientAttachBroadcast.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:clientAttachBroadcast.vi</H2>
+<P>Establish a connection to receive broadcast messages.</P>
+<P></P>
+<P>This method is used by a client application to establish a connection to the broadcast mechanism of the EC1000. Once connected, a client may receive broadcast messages from all EC1000 modules on the network. The messages contain information about the broadcasting module including the name, internet IP address, and other relevant data. This data is retrieved through the use of 'getBroadcastData'.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_clientAttachBroadcastc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:clientAttachBroadcast.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:clientDetachBroadcast.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:clientDetachBroadcast.vi</H2>
+<P>Terminate the connection to the broadcast mechanism.</P>
+<P></P>
+<P>This method is used by a client application to terminate a connection to the broadcast mechanism of the EC1000.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_clientDetachBroadcastc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:clientDetachBroadcast.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:getBroadcastData_status.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:getBroadcastData-status.vi</H2>
+<P>Get embedded controller device data.</P>
+<P></P>
+<P>This function is used by a client application to retrieve various types of data related to the specified EC1000 module. This particular function retreives the 'Status' data.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_getBroadcastData-statusc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:getBroadcastData-status.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:getBroadcastData_system.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:getBroadcastData-system.vi</H2>
+<P>Get embedded controller device data.</P>
+<P></P>
+<P>This function is used by a client application to retrieve various types of data related to the specified EC1000 module. This particular function retreives the 'System' data.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_getBroadcastData-systemc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:getBroadcastData-system.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:getBroadcastData.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:getBroadcastData.vi</H2>
+<P>Get embedded controller device data.</P>
+<P></P>
+<P>This function is used by a client application to retrieve various types of data related to the specified EC1000 module.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_getBroadcastDatac.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:getBroadcastData.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:getLecServerCount.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:getLecServerCount.vi</H2>
+<P>Get embedded controller device data.</P>
+<P></P>
+<P>Once a connection to the broadcast mechanism has been established, broadcast messages are then received and a table of available modules is built by the API. This method returns the number of distinct EC1000 modules that have transmitted valid broadcast packets since the 'clientAttachBroadcast' method was called.</P>
+<P>Because of the asynchronous and periodic nature of the broadcast transmissions, it may take some time before all EC1000 controllers are recognized and reported via this method. Several successive calls may yield different results until  enough time has passed to account for the longest broadcast interval. The broadcast interval is configured using the 'Session.requestFixedData' and 'Session.setFixedData' methods with the 'AdminConfig' data as an argument.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_getLecServerCountc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:getLecServerCount.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:getLecServerList.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:getLecServerList.vi</H2>
+<P>Get embedded controller device data.</P>
+<P></P>
+<P>This method returns a list of identifiers for the EC1000 modules for which valid broadcast packets have been received. One of the friendly names can be used in the method 'getBroadcastData' to obtain more extensive identification data.</P>
+<P>Because of the asynchronous and periodic nature of the broadcast transmissions, it may take some time before all EC1000 controllers are recognized and reported via this method. Several successive calls may yield different results until  enough time has passed to account for the longest broadcast interval. The broadcast interval is configured using the 'Session.requestFixedData' and 'Session.setFixedData' methods with the 'AdminConfig' data as an argument.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_getLecServerListc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:getLecServerList.vi"></P>
+</BODY>
+</HTML>

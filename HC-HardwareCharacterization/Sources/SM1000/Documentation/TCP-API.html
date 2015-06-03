@@ -1,0 +1,250 @@
+<HTML>
+<HEAD>
+<TITLE>EC1000-control.lvlib:SM1000-control.lvclass:Abort.vi</TITLE>
+<META NAME="Author" CONTENT="">
+<META NAME="GENERATOR" CONTENT="G Development Environment">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:Abort.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:Abort.vi</H2>
+<P>Immediately stops the execution of a running job and set the 'JobRunning' status to false.</P>
+<P></P>
+<P>Command: &quot;Abort&quot; or 1</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_Abortc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:Abort.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:CloseCOMPort.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:CloseCOMPort.vi</H2>
+<P>Closes a serial I/O COM port on the EC1000.</P>
+<P></P>
+<P>The COM port is closed and no longer available for serial I/O.</P>
+<P></P>
+<P>Command: &lt;&quot;CloseCOMPort&quot;&gt;,&lt;port-ID&gt; or 17,&lt;port-ID&gt;</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_CloseCOMPortc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:CloseCOMPort.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:COMWriteLine.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:COMWriteLine.vi</H2>
+<P>Writes the string argument to the COM port on the EC1000.</P>
+<P></P>
+<P>This operation is intended to permit out-of-band communication to serial port based automation devices or laser systems. The specified port-ID must have been opened with the command 'OpenCOMPort'.</P>
+<P></P>
+<P>Command: &lt;&quot;COMWriteLine&quot;&gt;,&lt;port-ID&gt;,&lt;string&gt;,&lt;timeout (ms)&gt; or 18,&lt;port-ID&gt;,&lt;string&gt;,&lt;timeout (ms)&gt;</P>
+<P>Returns: &quot;ERROR_PORT_TIMEOUT&quot; on timeout</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_COMWriteLinec.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:COMWriteLine.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:EnableBroadcasting.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:EnableBroadcasting.vi</H2>
+<P>Enables/disables the broadcast function of the EC1000.</P>
+<P></P>
+<P>The host must have exclusive control of the EC1000 ('TakeHostControl') before using this command.</P>
+<P></P>
+<P>Command: &lt;&quot;TakeHostControl&quot; or 2&gt;,&lt;0 == disable, 1 == enable&gt;</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_EnableBroadcastingc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:EnableBroadcasting.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:ExecuteJobContinuous.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:ExecuteJobContinuous.vi</H2>
+<P>Starts the execution of a job and repeats it forever.</P>
+<P></P>
+<P>The host must have taken control of the EC1000 using the 'TakeHostControl' command, and must have previously loaded a job from local ('LoadFlashJob') or USB based (LoadUSBJob) Flash storage prior to issuing this command. Job execution will begin immediately. If job execution is required to be synchronous with an external input such as STRTMRK, then it should have been constructed with a 'WaitForIO' instruction after the 'BeginJob' instruction. At the completion of the job, the job will loop until an 'Abort' command is received. The command returns as soon as the job is dispatched.</P>
+<P></P>
+<P>Command: &lt;&quot;ExecuteJobContinuous&quot;&gt;,&lt;job-name&gt; or 208,&lt;job-name&gt;</P>
+<P>Returns: &quot;0&quot;s</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_ExecuteJobContinuousc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:ExecuteJobContinuous.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:ExecuteJobOnce.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:ExecuteJobOnce.vi</H2>
+<P>Starts the execution of a job one time.</P>
+<P></P>
+<P>The host must have taken control of the EC1000 using the 'TakeHostControl' command, and must have previously loaded a job from local ('LoadFlashJob') or USB based (LoadUSBJob) Flash storage prior to issuing this command. Job execution will begin immediately without waiting unless it was constructed with a 'WaitForIO' instruction. The job can be stopped at any time by issuing an 'Abort' command.</P>
+<P></P>
+<P>Command: &lt;&quot;ExecuteJobOnce&quot;&gt;,&lt;job-name&gt; or 207,&lt;job-name&gt;</P>
+<P>Returns: &quot;0&quot;s</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_ExecuteJobOncec.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:ExecuteJobOnce.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:GetControllerTemp.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:GetControllerTemp.vi</H2>
+<P>Returns the current temperature of the EC1000 board in degrees Celsius.</P>
+<P></P>
+<P>Command: &quot;GetControllerTemp&quot; or 29</P>
+<P>Returns: floats</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_GetControllerTempc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:GetControllerTemp.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:GetFlashJobFileList.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:GetFlashJobFileList.vi</H2>
+<P>Returns a list of job files located on the Flash file system located on the EC1000.</P>
+<P></P>
+<P>Jobs are loaded into the EC1000 Flash file system through the use of the 'ILecSession.saveJobData' method.</P>
+<P></P>
+<P>Command: &lt;&quot;GetFlashJobFileList&quot;&gt; or 203</P>
+<P>Returns: array of stringss</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_GetFlashJobFileListc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:GetFlashJobFileList.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:GetHostControlStatus.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:GetHostControlStatus.vi</H2>
+<P>Returns the current EC1000 control status of this remote control session.</P>
+<P></P>
+<P>&quot;4&quot;: Control has been granted to this session.</P>
+<P>&quot;5&quot;: This session is not in exclusive control of the EC1000.</P>
+<P></P>
+<P>Command: &quot;GetHostControlStatus&quot; or 4</P>
+<P>Returns: &quot;4&quot;/&quot;5&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_GetHostControlStatusc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:GetHostControlStatus.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:GetHostInControl.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:GetHostInControl.vi</H2>
+<P>Returns the current host interface that has exclusive control of the EC1000.</P>
+<P></P>
+<P>&quot;Pendant&quot;: Control has been granted to the pendant interface.</P>
+<P>&quot;LANStream&quot;: Control has been granted to the streaming LAN interface.</P>
+<P>&quot;LAN&quot;: Control has been granted to the LAN remote control interface.</P>
+<P></P>
+<P>Command: &quot;GetHostInControl&quot; or 5</P>
+<P>Returns: &quot;Pendant&quot;/&quot;LANStream&quot;/&quot;LAN&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_GetHostInControlc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:GetHostInControl.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:GetJobElapsedTime.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:GetJobElapsedTime.vi</H2>
+<P>Returns the last measured duration in milli-seconds of the currently executing job.</P>
+<P></P>
+<P>Time is measured based on the monitoring of the 'BeginJob' and 'EndJob' events. Jobs must be constructed with these instructions to be measured.</P>
+<P></P>
+<P>Command: &quot;GetJobElapsedTime&quot; or 212</P>
+<P>Returns: integers</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_GetJobElapsedTimec.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:GetJobElapsedTime.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:GetJobStatus.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:GetJobStatus.vi</H2>
+<P>Returns the status of the currently executing job.</P>
+<P></P>
+<P>&quot;Idle&quot;: No job is executing; a job may or may not be loaded.</P>
+<P>&quot;Busy&quot;: A job is executing.</P>
+<P></P>
+<P>Command: &quot;GetJobStatus&quot; or 209</P>
+<P>Returns: busy (boolean)</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_GetJobStatusc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:GetJobStatus.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:GetKFactor.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:GetKFactor.vi</H2>
+<P>Returns the calibration factor for the X and potentially the Y axes (bits/mm) as stored in the 'Lens Config File'. This value will also represent the calibration factor for the Y axis if an explicit entry  is not present in the 'Lens Config File'.</P>
+<P></P>
+<P>Command: &quot;GetKFactor&quot; or 10</P>
+<P>Returns: float</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_GetKFactorc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:GetKFactor.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:GetRemoteIP.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:GetRemoteIP.vi</H2>
+<P>Returns the IP address of the LAN stream host that has control of the EC1000.</P>
+<P></P>
+<P>If no host has control, the address &quot;0.0.0.0&quot; is returned.</P>
+<P></P>
+<P>Command: &quot;GetRemoteIP&quot; or 9</P>
+<P>Returns: &lt;[0-9].[0-9].[0-9].[0-9]&gt;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_GetRemoteIPc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:GetRemoteIP.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:GetUSBJobFileList.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:GetUSBJobFileList.vi</H2>
+<P>Returns a list of job files located on the USB Flash file system attached to the EC1000.</P>
+<P></P>
+<P>Jobs are loaded ontoa USB Flash file system through the use of the 'ILecSession.saveJobData' method.</P>
+<P></P>
+<P>Command: &lt;&quot;GetUSBJobFileList&quot;&gt; or 204</P>
+<P>Returns: array of stringss</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_GetUSBJobFileListc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:GetUSBJobFileList.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:GetYKFactor.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:GetYKFactor.vi</H2>
+<P>Returns the calibration factor for the Y axis (bits/mm) as stored in the 'Lens Config File'. if the entry is missing from the 'Lens Config File', the value will be the same as returned by the 'GetKFactor' command.</P>
+<P></P>
+<P>Command: &quot;GetYKFactor&quot; or 28</P>
+<P>Returns: float</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_GetYKFactorc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:GetYKFactor.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:GetZKFactor.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:GetZKFactor.vi</H2>
+<P>Returns the calibration factor for the Z axis (bits/mm) as stored in the 'Lens Config File'.</P>
+<P></P>
+<P>Command: &quot;GetZKFactor&quot; or 27</P>
+<P>Returns: float</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_GetZKFactorc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:GetZKFactor.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:HardwareReset.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:HardwareReset.vi</H2>
+<P>Forces a hard reset of the EC1000.</P>
+<P></P>
+<P>The host must have exclusive control of the EC1000 ('TakeHostControl') before issuing this command.</P>
+<P>The board will reboot as if power were just applied. Any IP addressing changes will be applied.</P>
+<P></P>
+<P>Command: &quot;HardwareReset&quot; or 8</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_HardwareResetc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:HardwareReset.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:LoadFlashJob.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:LoadFlashJob.vi</H2>
+<P>Loads a job from the EC1000 resident Flash file system.</P>
+<P></P>
+<P>The host must have exclusive control of the EC1000 ('TakeHostControl') before issuing this command.</P>
+<P></P>
+<P>Command: &lt;&quot;LoadFlashJob&quot;&gt;,&lt;job-name&gt; or 205,&lt;job-name&gt;</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_LoadFlashJobc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:LoadFlashJob.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:LoadHardwareDefaults.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:LoadHardwareDefaults.vi</H2>
+<P>Sets the current operating parameters of the EC1000 to their default values.</P>
+<P></P>
+<P>The host must have exclusive control of the EC1000 ('TakeHostControl') before issuing this command.</P>
+<P></P>
+<P>Command: &quot;LoadHardwareDefaults&quot; or 7</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_LoadHardwareDefaultsc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:LoadHardwareDefaults.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:LoadUSBJob.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:LoadUSBJob.vi</H2>
+<P>Loads a job from the USB Flash file system attached to the EC1000.</P>
+<P></P>
+<P>The host must have exclusive control of the EC1000 ('TakeHostControl') before issuing this command.</P>
+<P></P>
+<P>Command: &lt;&quot;LoadUSBJob&quot;&gt;,&lt;job-name&gt; or 206,&lt;job-name&gt;</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_LoadUSBJobc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:LoadUSBJob.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:OpenCOMPort.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:OpenCOMPort.vi</H2>
+<P>Opens the specified serial I/O COM port on the EC1000.</P>
+<P></P>
+<P>This command is available only if the system is configured for accepting streaming job data over Ethernet.</P>
+<P>The specified COM port is opened and is available for serial I/O.</P>
+<P>This operation is intended to permit out-of-band communication to serial port based automation devices or laser systems.</P>
+<P>A normal configuration might be specified as: &quot;OpenCOMPort,2,38400,8,None,1,None.</P>
+<P>Only COM port-ID 1 has hardware flow control support.</P>
+<P></P>
+<P>Command: &lt;&quot;OpenCOMPort&quot;&gt;,&lt;port-ID&gt;,&lt;baud-rate&gt;,&lt;data-bits&gt;,&lt;parity&gt;,&lt;stop-bits&gt;,&lt;flow-control&gt; or 14,&lt;port-ID&gt;,&lt;baud-rate&gt;,&lt;data-bits&gt;,&lt;parity&gt;,&lt;stop-bits&gt;,&lt;flow-control&gt;</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_OpenCOMPortc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:OpenCOMPort.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:ReleaseHostControl.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:ReleaseHostControl.vi</H2>
+<P>Releases exclusive control of the EC1000 to the LANStream host interface.</P>
+<P></P>
+<P>The host must have exclusive control of the EC1000 ('TakeHostControl') before issuing this command. Control is returned to the LANStream interface such that jobs may again be streamed to the EC1000 via that interface.</P>
+<P></P>
+<P>Command: &quot;ReleaseHostControl&quot; or 3</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_ReleaseHostControlc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:ReleaseHostControl.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:ResetPerformanceGlobals.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:ResetPerformanceGlobals.vi</H2>
+<P>Resets the run-time performance modification parameters to their unity values.</P>
+<P></P>
+<P>The unity values result in no run-time modification to job specified marking parameters.</P>
+<P></P>
+<P>Command: &lt;&quot;ResetPerformanceGlobals&quot; or 15&gt;,&lt;0 == do not write, 1 == write reset values to the 'Performance Globals' configuration file&gt;</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_ResetPerformanceGlobalsc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:ResetPerformanceGlobals.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:SetMOTFEncoderRate.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:SetMOTFEncoderRate.vi</H2>
+<P>Sets the calibration factor used to convert encoder counts to laser galvo command bits (bits/encoderCount).</P>
+<P></P>
+<P>The encoder rate relates encoder counts to how far an object travels in the lens field in galvo command bits.</P>
+<P></P>
+<P>Command: &lt;&quot;SetMOTFEncoderRate&quot;&gt;,&lt;rate&gt; or 21,&lt;rate&gt;</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_SetMOTFEncoderRatec.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:SetMOTFEncoderRate.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:SetPerformanceGlobals.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:SetPerformanceGlobals.vi</H2>
+<P>Set factors to alter the run-time performance of the system.</P>
+<P></P>
+<P>These factors alter the specified marking properties without the need for changing the job. These values are volatile and will not be valid if the EC1000 is reset.</P>
+<P></P>
+<P>Command: &lt;&quot;SetPerformanceGlobals&quot;&gt;,&lt;mark-speed-adjust&gt;,&lt;laser-power-adjust&gt;,&lt;pulse-width-adjust&gt;,&lt;pulse-period-adjust&gt;,&lt;orientation&gt;,&lt;X-offset&gt;,&lt;Y-offset&gt;,&lt;Z-offset&gt; or 14, &lt;mark-speed-adjust&gt;,&lt;laser-power-adjust&gt;,&lt;pulse-width-adjust&gt;,&lt;pulse-period-adjust&gt;,&lt;orientation&gt;,&lt;X-offset&gt;,&lt;Y-offset&gt;,&lt;Z-offset&gt;</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_SetPerformanceGlobalsc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:SetPerformanceGlobals.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:TakeHostControl.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:TakeHostControl.vi</H2>
+<P>Requests exclusive control of the EC1000.</P>
+<P></P>
+<P>Exclusive control will not be granted if the EC1000 is currently executing a job. Use the 'GetJobStatus' command to determine if the EC1000 is in a proper state before issuing this command.</P>
+<P></P>
+<P>Command: &quot;TakeHostControl&quot; or 2</P>
+<P>Returns: &quot;0&quot;</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_TakeHostControlc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:TakeHostControl.vi"></P>
+</BODY>
+</HTML>

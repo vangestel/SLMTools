@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance">
+  <xsd:element name="LECList">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="LEC" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:attributeGroup ref="identifier"/>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:attributeGroup name="identifier">
+    <xsd:attribute name="name" type="xsd:string"/>
+    <xsd:attribute name="ip" type="xsd:string"/>
+    <xsd:attribute name="mac" type="xsd:string"/>
+  </xsd:attributeGroup>
+</xsd:schema>

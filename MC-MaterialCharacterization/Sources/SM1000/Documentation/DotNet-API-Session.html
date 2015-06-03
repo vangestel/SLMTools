@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<TITLE>EC1000-control.lvlib:SM1000-control.lvclass:handleConnectEvent.vi</TITLE>
+<META NAME="Author" CONTENT="">
+<META NAME="GENERATOR" CONTENT="G Development Environment">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:handleConnectEvent.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:handleConnectEvent.vi</H2>
+<P>Handles any received 'OnConnect'-events from an EC device session.</P>
+<P>Evnets are only detected after registration through the 'registerConnectEvent' method.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_handleConnectEventc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:handleConnectEvent.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:loginSession.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:loginSession.vi</H2>
+<P>Connect to an EC device by establishing a session.</P>
+<P></P>
+<P>Once EC1000 modules have been identified via the use of the Broadcast API, a communications session can be opened between the client an a selected target EC1000. Sessions are established via a call to this method. Multiple sessions to different target EC1000 controllers are made by instantiating separate Session objects. A target EC1000 controller may only serve one client session at a time.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_loginSessionc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:loginSession.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:logoutSession.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:logoutSession.vi</H2>
+<P>Disconnect an EC device session.</P>
+<P></P>
+<P>When session communication is completed, the client closes the session via a call to this method. Once the session is closed, another new session may be opened to the same or other EC1000 devices via a call to 'loginSession'.</P>
+<P>Note that if a job was streamed out to the EC1000 and was still executing when the logout was invoked, the job will be immediately aborted.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_logoutSessionc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:logoutSession.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:manageJobData.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:manageJobData.vi</H2>
+<P>Manage jobs that have been stored on the EC1000.</P>
+<P></P>
+<P>Jobs already stored on the EC1000 can be renamed or deleted.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_manageJobDatac.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:manageJobData.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:registerConnectEvent.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:registerConnectEvent.vi</H2>
+<P>Registers for application and exception events returned from the EC device session.</P>
+<P>The method 'handleConnectEvent' is called when the event is detected.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_registerConnectEventc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:registerConnectEvent.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:requestFixedData.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:requestFixedData.vi</H2>
+<P>Retrieve fixed data from an EC device session.</P>
+<P></P>
+<P>EC1000 modules are autonomous devices that contain information that configures the module at boot-up for the particular hardware arrangement of the marking head. This information defines such things as the laser interface, the lens characteristics, and the optical system correction tables. An application can access this information by specifying the data type using the 'DataType' argument and providing a file name for the data as stored on the EC1000. The information is returned as an XML string which must be decoded by the application.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_requestFixedDatac.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:requestFixedData.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:requestJobNameList.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:requestJobNameList.vi</H2>
+<P>Gets a list of job names stored on the EC1000 Flash or USB Flash.</P>
+<P></P>
+<P>Returns a list of jobs stored in the specified storage location on the EC1000.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_requestJobNameListc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:requestJobNameList.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:saveJobData.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:saveJobData.vi</H2>
+<P>Send job data for storage in the EC1000 flash memory or USB device.</P>
+<P></P>
+<P>Job data is compiled and stored on the target EC1000 Flash file system for use in Local Mode.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_saveJobDatac.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:saveJobData.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:sendFixedData.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:sendFixedData.vi</H2>
+<P>Send fixed data to an EC device session.</P>
+<P></P>
+<P>Data retrieved via the 'requestFixedData' method may be modified and passed back to the controller for local storage. That data will then be immediately used and also the next time the module is booted.</P>
+<P>An application should wait on an application message event 'FixedDataProcessed' to be assured the updated data has been processed by the EC1000 and is ready for subsequent actions.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_sendFixedDatac.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:sendFixedData.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:sendPriorityData.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:sendPriorityData.vi</H2>
+<P>Send priority data to an EC device session.</P>
+<P></P>
+<P>An independent and parallel communication channel is provided to the controller to pass &quot;out-of-band&quot; commands. This channel of communication is used to send urgent commands to the controller, such as an abort message, or pause/resume messages.</P>
+<P>The method returns as soon as the message is sent, not when the operation is actually performed on the target. Some messages, however, create response events when the action is completed, such as &quot;Abort&quot; or &quot;GetRegisters&quot;.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_sendPriorityDatac.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:sendPriorityData.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:sendStreamData.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:sendStreamData.vi</H2>
+<P>Send streaming data to an EC device session.</P>
+<P></P>
+<P>Marking jobs are specified as sequences of data that represent instructions to the controller to set operational parameters, activate the laser steering galvos in both marking and non-marking modes, to interact with external devices, and to send event information back to a listening application. The job data is specified in an XML string, which is defined in the Streaming Job Data Definition section;</P>
+<P></P>
+<P>Job execution by the controller starts as soon as the job data is received by the module and continues for as long as job data is available. Very large jobs can be partitioned into logical chunks, such as at marking object boundaries, and streamed out to the device as buffering on the host and target allow. Since the execution of the job and the process of streaming the data of the job are asynchronous and overlapped, it is possible to maintain continuous job execution with no pauses.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_sendStreamDatac.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:sendStreamData.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:sendStreamData2.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:sendStreamData2.vi</H2>
+<P>Send streaming data to an EC device session.</P>
+<P></P>
+<P>Marking jobs are specified as sequences of data that represent instructions to the controller to set operational parameters, activate the laser steering galvos in both marking and non-marking modes, to interact with external devices, and to send event information back to a listening application. The job data is specified in an XML string, which is defined in the Streaming Job Data Definition section;</P>
+<P></P>
+<P>Job execution by the controller starts as soon as the job data is received by the module and continues for as long as job data is available. Very large jobs can be partitioned into logical chunks, such as at marking object boundaries, and streamed out to the device as buffering on the host and target allow. Since the execution of the job and the process of streaming the data of the job are asynchronous and overlapped, it is possible to maintain continuous job execution with no pauses.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_sendStreamData2c.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:sendStreamData2.vi"></P>
+<HR>
+<A NAME="EC1000_control.lvlib:SM1000_control.lvclass:unregisterConnectEvent.vi"></A><H2>EC1000-control.lvlib:SM1000-control.lvclass:unregisterConnectEvent.vi</H2>
+<P>Unregisters the application for 'OnConnect'-events.</P>
+<P><IMG SRC="Images\EC1000-control_lvlib_SM1000-control_lvclass_unregisterConnectEventc.png" ALT="EC1000-control.lvlib:SM1000-control.lvclass:unregisterConnectEvent.vi"></P>
+</BODY>
+</HTML>

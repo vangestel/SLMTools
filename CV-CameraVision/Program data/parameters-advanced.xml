@@ -1,0 +1,262 @@
+<?xml version='1.0' standalone='yes' ?>
+<LVData xmlns="http://www.ni.com/LVData">
+<Version>13.0.1f2</Version>
+<Cluster>
+<Name>Advanced parameters</Name>
+<NumElts>6</NumElts>
+<Cluster>
+<Name>Config params adv</Name>
+<NumElts>5</NumElts>
+<I32>
+<Name>Image border size</Name>
+<Val>1</Val>
+</I32>
+<I32>
+<Name>Framegrabber board</Name>
+<Val>0</Val>
+</I32>
+<I32>
+<Name>Framegrabber buffer</Name>
+<Val>2</Val>
+</I32>
+<Path>
+<Name>Camera config file</Name>
+<Val>Support files\camera-config.mcf</Val>
+</Path>
+<Path>
+<Name>Framegrabber DLL file</Name>
+<Val>C:\Program Files (x86)\SiliconSoftware\Runtime5.2.2\bin\SiSo_LabviewInterface.dll</Val>
+</Path>
+</Cluster>
+<Cluster>
+<Name>Acquis params adv</Name>
+<NumElts>8</NumElts>
+<DBL>
+<Name>Image acquisition timeout factor</Name>
+<Val>1.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Image collection timeout factor</Name>
+<Val>2.00000000000000</Val>
+</DBL>
+<U8>
+<Name>Manual trigger ID</Name>
+<Val>25</Val>
+</U8>
+<DAQChannel>
+<Name>Precision hardware counter</Name>
+<Val>Dev1/ctr0</Val>
+</DAQChannel>
+<Boolean>
+<Name>When to use gate signal?</Name>
+<Val>1</Val>
+</Boolean>
+<I32>
+<Name>Minimum acquisition timeout</Name>
+<Val>1</Val>
+</I32>
+<DAQChannel>
+<Name>External timing channel</Name>
+<Val>/Dev1/PFI4</Val>
+</DAQChannel>
+<DAQChannel>
+<Name>External gating channel</Name>
+<Val>Dev1/port1/line1</Val>
+</DAQChannel>
+</Cluster>
+<Cluster>
+<Name>Correct params adv</Name>
+<NumElts>8</NumElts>
+<U32>
+<Name>2nd image mirror axis</Name>
+<Val>1</Val>
+</U32>
+<I32>
+<Name>Cross-correlation decimation</Name>
+<Val>5</Val>
+</I32>
+<EL>
+<Name>Cross-correlation algorithm</Name>
+<Choice>direct</Choice>
+<Choice>frequency domain</Choice>
+<Val>1</Val>
+</EL>
+<Boolean>
+<Name>Always threshold when smoothing?</Name>
+<Val>1</Val>
+</Boolean>
+<Boolean>
+<Name>Threshold only 2nd camera image?</Name>
+<Val>0</Val>
+</Boolean>
+<Cluster>
+<Name>Median filter type</Name>
+<NumElts>3</NumElts>
+<I32>
+<Name>Order #</Name>
+<Val>4</Val>
+</I32>
+<I32>
+<Name>Y Size</Name>
+<Val>3</Val>
+</I32>
+<I32>
+<Name>X Size</Name>
+<Val>3</Val>
+</I32>
+</Cluster>
+<I32>
+<Name>Gaussian filter kernel size</Name>
+<Val>3</Val>
+</I32>
+<I32>
+<Name>Gaussian filter kernel number</Name>
+<Val>4</Val>
+</I32>
+</Cluster>
+<Cluster>
+<Name>Analys params adv</Name>
+<NumElts>2</NumElts>
+<Boolean>
+<Name>Melt-pool connectivity</Name>
+<Val>0</Val>
+</Boolean>
+<Array>
+<Name>Melt-pool characteristics</Name>
+<Dimsize>6</Dimsize>
+<I32>
+<Name>Measurement Parameter</Name>
+<Val>35</Val>
+</I32>
+<I32>
+<Name>Measurement Parameter</Name>
+<Val>22</Val>
+</I32>
+<I32>
+<Name>Measurement Parameter</Name>
+<Val>25</Val>
+</I32>
+<I32>
+<Name>Measurement Parameter</Name>
+<Val>0</Val>
+</I32>
+<I32>
+<Name>Measurement Parameter</Name>
+<Val>1</Val>
+</I32>
+<I32>
+<Name>Measurement Parameter</Name>
+<Val>46</Val>
+</I32>
+</Array>
+</Cluster>
+<Cluster>
+<Name>Temp params adv</Name>
+<NumElts>2</NumElts>
+<DBL>
+<Name>Axis origin relative position</Name>
+<Val>0.50000000000000</Val>
+</DBL>
+<String>
+<Name>Regression file relative path</Name>
+<Val>Program data\temperatureFieldRegression.dat</Val>
+</String>
+</Cluster>
+<Cluster>
+<Name>Storage params adv</Name>
+<NumElts>3</NumElts>
+<Cluster>
+<Name>Storage labels</Name>
+<NumElts>7</NumElts>
+<String>
+<Name>Original</Name>
+<Val>Original</Val>
+</String>
+<String>
+<Name>Corrected</Name>
+<Val>Corrected</Val>
+</String>
+<String>
+<Name>Binary</Name>
+<Val>Binary</Val>
+</String>
+<String>
+<Name>Temperature</Name>
+<Val>Temperature</Val>
+</String>
+<String>
+<Name>Characteristics</Name>
+<Val>Characteristics</Val>
+</String>
+<String>
+<Name>Mapping</Name>
+<Val>Map</Val>
+</String>
+<String>
+<Name>TemperatureValues</Name>
+<Val>TemperatureValues</Val>
+</String>
+</Cluster>
+<Array>
+<Name>Characteristics headers</Name>
+<Dimsize>8</Dimsize>
+<String>
+<Name>String</Name>
+<Val>Average intensity [0-255]</Val>
+</String>
+<String>
+<Name>String</Name>
+<Val>Peak intensity [0-255]</Val>
+</String>
+<String>
+<Name>String</Name>
+<Val>Melt-pool size [mm&#178;]</Val>
+</String>
+<String>
+<Name>String</Name>
+<Val>Melt-pool aspect ratio []</Val>
+</String>
+<String>
+<Name>String</Name>
+<Val>Melt-pool fragments []</Val>
+</String>
+<String>
+<Name>String</Name>
+<Val>Melt-pool center X [pix]</Val>
+</String>
+<String>
+<Name>String</Name>
+<Val>Melt-pool center Y [pix]</Val>
+</String>
+<String>
+<Name>String</Name>
+<Val>Melt-pool orientation [cw-rad]</Val>
+</String>
+</Array>
+<Array>
+<Name>CharacteristicsTemperature headers</Name>
+<Dimsize>5</Dimsize>
+<String>
+<Name>String</Name>
+<Val>Average temperature [&#176;C]</Val>
+</String>
+<String>
+<Name>String</Name>
+<Val>Max. temperature [&#176;C]</Val>
+</String>
+<String>
+<Name>String</Name>
+<Val>Min. temperature [&#176;C]</Val>
+</String>
+<String>
+<Name>String</Name>
+<Val>Std. dev. temperature [&#176;C]</Val>
+</String>
+<String>
+<Name>String</Name>
+<Val>Data points</Val>
+</String>
+</Array>
+</Cluster>
+</Cluster>
+</LVData>

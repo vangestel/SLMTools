@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance">
+  <xsd:element name="Data">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="MSN" type="xsd:string"></xsd:element>
+        <xsd:element name="PVer" type="xsd:string"></xsd:element>
+        <xsd:element name="AVer" type="xsd:string"></xsd:element>
+        <xsd:element name="ObjExtVer" type="xsd:string"></xsd:element>
+        <xsd:element name="FPGAFirmVer" type="xsd:string"></xsd:element>
+        <xsd:element name="StateCode" type="xsd:uint"></xsd:element>
+        <xsd:element name="LastError" type="xsd:int"></xsd:element>
+        <xsd:element name="FreeTempStorage" type="xsd:uint"></xsd:element>
+        <xsd:element name="PermStoragePath" type="xsd:string"></xsd:element>
+        <xsd:element name="FreePermStorage" type="xsd:uint"></xsd:element>
+        <xsd:element name="FreeUSBStorage" type="xsd:uint"></xsd:element>
+        <xsd:element name="MAC" type="xsd:string"></xsd:element>
+        <xsd:element name="NetMask" type="xsd:string"></xsd:element>
+        <xsd:element name="NetAssign" type="xsd:int"></xsd:element>
+        <xsd:element name="IP" type="xsd:string"></xsd:element>
+        <xsd:element name="ConnectIP" type="xsd:string"></xsd:element>
+        <xsd:element name="FriendlyName" type="xsd:string"></xsd:element>
+        <xsd:element name="ConnectJob" type="xsd:string"></xsd:element>
+        <xsd:element name="Port" type="xsd:uint"></xsd:element>
+        <xsd:element name="HSN" type="xsd:string"></xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

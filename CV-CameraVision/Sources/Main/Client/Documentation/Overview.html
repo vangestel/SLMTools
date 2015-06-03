@@ -1,0 +1,140 @@
+<HTML>
+<HEAD>
+<TITLE>Client.lvlib:Client.lvclass:VI-tree.vi</TITLE>
+<META NAME="Author" CONTENT="">
+<META NAME="GENERATOR" CONTENT="G Development Environment">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<A NAME="Client.lvlib:Client.lvclass:VI_tree.vi"></A><H2>Client.lvlib:Client.lvclass:VI-tree.vi</H2>
+<P>Representation of the main module functions and their relationships/interactions.</P>
+<P>Additional emphasis on functions and definitions that should be modified by the integrator to the specific use case.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_VI-treec.png" ALT="Client.lvlib:Client.lvclass:VI-tree.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Supported_actions.ctl"></A><H2>Client.lvlib:Client.lvclass:Supported-actions.ctl</H2>
+<P>List of actions which can be the result of a received message.</P>
+<P></P>
+<P>These actions should be implemented in the 'Process-received-message' function or transmitted to a separate execution function within the larger module.s</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Supported-actionsctlc.png" ALT="Client.lvlib:Client.lvclass:Supported-actions.ctl"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Clear_reference.vi"></A><H2>Client.lvlib:Client.lvclass:Clear-reference.vi</H2>
+<P></P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Clear-referencec.png" ALT="Client.lvlib:Client.lvclass:Clear-reference.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Supported_messages.ctl"></A><H2>Client.lvlib:Client.lvclass:Supported-messages.ctl</H2>
+<P>List of message types that are accepted by the client.</P>
+<P></P>
+<P>Each type still has to be implemented in the 'Prcoess-received-message' function and optionally in the 'Create message' function.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Supported-messagesctlc.png" ALT="Client.lvlib:Client.lvclass:Supported-messages.ctl"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Object_reference.ctl"></A><H2>Client.lvlib:Client.lvclass:Object-reference.ctl</H2>
+<P>Reference to the main object value, a communication client in this specifc case.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Object-referencectlc.png" ALT="Client.lvlib:Client.lvclass:Object-reference.ctl"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Create_reference.vi"></A><H2>Client.lvlib:Client.lvclass:Create-reference.vi</H2>
+<P></P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Create-referencec.png" ALT="Client.lvlib:Client.lvclass:Create-reference.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Supported_modules.ctl"></A><H2>Client.lvlib:Client.lvclass:Supported-modules.ctl</H2>
+<P>List of module types that are accepted as sender by the client.</P>
+<P></P>
+<P>Each type still has to be implemented in the 'Prcoess-received-message' function.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Supported-modulesctlc.png" ALT="Client.lvlib:Client.lvclass:Supported-modules.ctl"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Custom_errors.ctl"></A><H2>Client.lvlib:Client.lvclass:Custom-errors.ctl</H2>
+<P>List of custom error types and the corresponding error code, before application of the error code offset.</P>
+<P></P>
+<P>Each error should have a corresponding description in the 'Custom-error-definitions' function.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Custom-errorsctlc.png" ALT="Client.lvlib:Client.lvclass:Custom-errors.ctl"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Custom_error_definitions.vi"></A><H2>Client.lvlib:Client.lvclass:Custom-error-definitions.vi</H2>
+<P>This function contains a table which provides the relation between an error code and the error description (text).</P>
+<P>The error range can be modified through the error code offset. The codes should correspond to those used by the 'Invoke-error' function.</P>
+<P>Optionally supports multiple languages.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Custom-error-definitionsc.png" ALT="Client.lvlib:Client.lvclass:Custom-error-definitions.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Process_error.vi"></A><H2>Client.lvlib:Client.lvclass:Process-error.vi</H2>
+<P>Processes any previously encountered error.</P>
+<P>This function can process both the standard LabVIEW errors and the custom defined errors for this module.</P>
+<P>The default implementation simply shows an error message box to the user and removes the error from the stream, without further affecting the program execution.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Process-errorc.png" ALT="Client.lvlib:Client.lvclass:Process-error.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Resolve_sender.vi"></A><H2>Client.lvlib:Client.lvclass:Resolve-sender.vi</H2>
+<P></P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Resolve-senderc.png" ALT="Client.lvlib:Client.lvclass:Resolve-sender.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Invoke_error.vi"></A><H2>Client.lvlib:Client.lvclass:Invoke-error.vi</H2>
+<P>Inserts a custom (module specifc) error in the error stream.</P>
+<P>The 'Custom-errors' type definition contains the custom error types, while the error descriptions are defined in the 'Custom-error-definitions' function.</P>
+<P>The function includes the calling functions' name as the origin of the error.</P>
+<P>Optionally the function can be instructed to overwrite any pre-existing error in the error stream.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Invoke-errorc.png" ALT="Client.lvlib:Client.lvclass:Invoke-error.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Process_received_message.vi"></A><H2>Client.lvlib:Client.lvclass:Process-received-message.vi</H2>
+<P>This function wraps the message checks, analysis and response action functions.</P>
+<P>The validity of the message and message origin is checked, after which the appropriate module action is determined and executed.</P>
+<P></P>
+<P>The actions should be implemented by the module integrator.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Process-received-messagec.png" ALT="Client.lvlib:Client.lvclass:Process-received-message.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Message_handler.vi"></A><H2>Client.lvlib:Client.lvclass:Message-handler.vi</H2>
+<P>Simple example of a continuous communication monitor loop.</P>
+<P>The function continuously monitors the incomming (client) communication channel. At regular intervals, or after receiving a message, the client activity is reaffirmed through a 'heartbeat' message to the server.</P>
+<P>A new message is handled through the 'Process-received-message' function, which checks the message origins, determines the appropriate client action and executes this action.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Message-handlerc.png" ALT="Client.lvlib:Client.lvclass:Message-handler.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Send_heartbeat.vi"></A><H2>Client.lvlib:Client.lvclass:Send-heartbeat.vi</H2>
+<P>Wrapper function for sending the specific 'Hearbeat' type message.</P>
+<P>This function creates and immediately sends a heartbeat message to the server, using the configuration of the client object.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Send-heartbeatc.png" ALT="Client.lvlib:Client.lvclass:Send-heartbeat.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Resolve_message_type.vi"></A><H2>Client.lvlib:Client.lvclass:Resolve-message-type.vi</H2>
+<P></P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Resolve-message-typec.png" ALT="Client.lvlib:Client.lvclass:Resolve-message-type.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Wait_for_message.vi"></A><H2>Client.lvlib:Client.lvclass:Wait-for-message.vi</H2>
+<P>Monitors the incomming communication channel (client channel) for new messages.</P>
+<P>The monitoring will timeout based on the 'Heartbeat interval' parameter in the client settings. The timeout time is 80% of the heartbeat interval value, to allow the client to send a heartbeat message and have it processed by the server. The heartbeat is separate functionality, acessed through the 'Send-heartbeat' function.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Wait-for-messagec.png" ALT="Client.lvlib:Client.lvclass:Wait-for-message.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Initialize_object.vi"></A><H2>Client.lvlib:Client.lvclass:Initialize-object.vi</H2>
+<P>Initialize the client resources and create a reference to the client object.</P>
+<P></P>
+<P>Requires initialized communication channels (message queues), one for incoming (client) communication and one for outgoing (server) communication. These are generally intitialized by the 'server' instance which calls the main client vi.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Initialize-objectc.png" ALT="Client.lvlib:Client.lvclass:Initialize-object.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Create_message.vi"></A><H2>Client.lvlib:Client.lvclass:Create-message.vi</H2>
+<P>Creates a message object of the selected type and wraps this in the base 'Message' object.</P>
+<P>This function also sets the 'Type' property of the message object to the selected type.</P>
+<P></P>
+<P>A 'Not implemented' error is returned if the selected type has no associated message object.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Create-messagec.png" ALT="Client.lvlib:Client.lvclass:Create-message.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Clear_object.vi"></A><H2>Client.lvlib:Client.lvclass:Clear-object.vi</H2>
+<P>Releases the base client resources and releases the client object.</P>
+<P></P>
+<P>Note that this vi does not necessarily release all resources or closes all connections. Specific cleanup functions can still be required. Basically, everything which is not initialized by the 'Initialize-object' function has to be cleaned up before releasing the main object.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Clear-objectc.png" ALT="Client.lvlib:Client.lvclass:Clear-object.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Send_message.vi"></A><H2>Client.lvlib:Client.lvclass:Send-message.vi</H2>
+<P>Send a message to the specified list of receivers.</P>
+<P>The message is added to the back of the server message queue for processing.</P>
+<P>The message needs to be created beforehand, either manually or through the 'Create-message' function and any specific contents need to be pre-configured. This function takes care of the sender and time information.</P>
+<P>The receivers must be provided as an array. Each receiver entry can be composed in two ways: either '&lt;module type&gt;' to send to all active clients of the specified type, or '&lt;module type&gt;&lt;module ID&gt;' to send to a specific client. Optionally the special client types 'All' or 'Server' can be used to send the message to all active clients (server excluded) or to the server, respectively.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Send-messagec.png" ALT="Client.lvlib:Client.lvclass:Send-message.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Resolve_client_from_identifier.vi"></A><H2>Client.lvlib:Client.lvclass:Resolve-client-from-identifier.vi</H2>
+<P></P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Resolve-client-from-identifierc.png" ALT="Client.lvlib:Client.lvclass:Resolve-client-from-identifier.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Resolve_client_from_channel.vi"></A><H2>Client.lvlib:Client.lvclass:Resolve-client-from-channel.vi</H2>
+<P></P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Resolve-client-from-channelc.png" ALT="Client.lvlib:Client.lvclass:Resolve-client-from-channel.vi"></P>
+<HR>
+<A NAME="Client.lvlib:Client.lvclass:Send_priority_message.vi"></A><H2>Client.lvlib:Client.lvclass:Send-priority-message.vi</H2>
+<P>Send a message to the specified list of receivers.</P>
+<P>The message is added to the front of the server message queue and will be treated with priority.</P>
+<P>The message needs to be created beforehand, either manually or through the 'Create-message' function and any specific contents need to be pre-configured. This function takes care of the sender and time information.</P>
+<P>The receivers must be provided as an array. Each receiver entry can be composed in two ways: either '&lt;module type&gt;' to send to all active clients of the specified type, or '&lt;module type&gt;&lt;module ID&gt;' to send to a specific client. Optionally the special client types 'All' or 'Server' can be used to send the message to all active clients (server excluded) or to the server, respectively.</P>
+<P><IMG SRC="Images\Client_lvlib_Client_lvclass_Send-priority-messagec.png" ALT="Client.lvlib:Client.lvclass:Send-priority-message.vi"></P>
+</BODY>
+</HTML>

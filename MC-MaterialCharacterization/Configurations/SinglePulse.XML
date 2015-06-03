@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Data type="JobData" rev="2.0">
+  <BeginJob />
+  <Set id="FieldOffset">0.0,0.0</Set>
+  <Set id="Transform">1.0,0.0,0.0,1.0</Set>
+  <Set id="Units">1</Set>
+  <Set id="XYCalFactor">196</Set>
+  <Set id="EnableLaser">True</Set>
+  <Set id="JumpDelay">50</Set>
+  <Set id="MarkDelay">50</Set>
+  <Set id="PolyDelay">0</Set>
+  <Set id="LaserOnDelay">50</Set>
+  <Set id="LaserOffDelay">50</Set>
+  <Set id="JumpSpeed">20,10</Set>
+  <Set id="MarkSpeed">20,10</Set>
+  <Set id="LaserPower">50</Set>
+  <Set id="Offset">-4.0,0.5</Set>
+  <JumpAbs>0.0,0.0</JumpAbs>
+  <LaserOn>5000</LaserOn>
+  <Set id="EnableLaser">False</Set>
+  <Set id="FieldOffset">0,0</Set>
+  <Set id="Transform">1.000000,0.000000,0.000000,1.000000</Set>
+  <EndJob />
+</Data>

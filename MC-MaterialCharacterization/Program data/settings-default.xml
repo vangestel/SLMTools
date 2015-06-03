@@ -1,0 +1,16 @@
+<?xml version='1.0' standalone='yes' ?>
+<LVData xmlns="http://www.ni.com/LVData">
+<Version>13.0.1f2</Version>
+<Cluster>
+<Name>Configuration data</Name>
+<NumElts>1</NumElts>
+<Cluster>
+<Name>Options</Name>
+<NumElts>1</NumElts>
+<Boolean>
+<Name>Option 1</Name>
+<Val>0</Val>
+</Boolean>
+</Cluster>
+</Cluster>
+</LVData>
